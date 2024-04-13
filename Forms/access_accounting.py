@@ -1,6 +1,3 @@
-import sys
-import fdb
-from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (
     QApplication,
     QTableWidget,
@@ -170,6 +167,7 @@ class AccessAccounting(QWidget):
             QMessageBox.about(self, " ", "Данные изменены")
         except:
             QMessageBox.about(self, "Ошибка", "Данные не изменены")
+        self.db.conn.commit()
 
     # удалить из таблицы строку
     def dels(self):
