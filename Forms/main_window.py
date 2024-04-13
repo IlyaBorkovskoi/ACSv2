@@ -15,6 +15,7 @@ from Forms.employee import Employees
 from Forms.event import Event
 from Forms.access_point import AccessPoint
 from Forms.post import Post
+from Forms.access_accounting import AccessAccounting
 
 
 # Главное окно, содержит навигационную панель
@@ -63,7 +64,7 @@ class MainWindow(QWidget):
         self.button = QPushButton("Учет доступа", self)
         self.button.resize(150, 40)
         self.button.move(50, 260)
-        self.button.clicked.connect(self.access_point_clicked)
+        self.button.clicked.connect(self.access_ac_clicked)
 
         # кнопка перехода в Точка доступа
         self.button = QPushButton("Точки доступа", self)
@@ -99,11 +100,13 @@ class MainWindow(QWidget):
         self.ASW.show()
         self.close()
 
+    # Кнопка перехода в точки доступа
     def access_point_clicked(self):
         self.APW = AccessPoint(self)
         self.APW.show()
         self.close()
 
+    # Кнопка перехода в События
     def event_clicked(self):
         self.EW = Event(self)
         self.EW.show()
@@ -113,4 +116,9 @@ class MainWindow(QWidget):
     def employees_clicked(self):
         self.EPW = Employees(self)
         self.EPW.show()
+        self.close()
+    #Кнопка перехода в Учет доступа
+    def access_ac_clicked(self):
+        self.AAW = AccessAccounting(self)
+        self.AAW.show()
         self.close()

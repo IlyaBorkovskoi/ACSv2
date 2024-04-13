@@ -1,7 +1,5 @@
-import sys
-import fdb
+
 from PyQt5.QtWidgets import (
-    QApplication,
     QTableWidget,
     QMessageBox,
     QLabel,
@@ -56,7 +54,7 @@ class AccessPoint(QWidget):
         self.btn = QPushButton("Редактировать", self)
         self.btn.resize(150, 40)
         self.btn.move(520, 270)
-        self.btn.clicked.connect(self.ins)
+        self.btn.clicked.connect(self.upentry)
         # кнопка удалить запись
         self.btn = QPushButton("Удалить", self)
         self.btn.resize(150, 40)
@@ -83,11 +81,11 @@ class AccessPoint(QWidget):
 
     # добавить таблицу новую строку
     def ins(self):
-        idp, pn, r = self.idap.text(), self.pn.text(), self.r.text()
+        idap, pn, r = self.idap.text(), self.pn.text(), self.r.text()
         try:
             self.db.cur.execute(
                 "insert into ACCESSPOINTS (POINTID,POINTNAME,ROOM) values (?,?,?)",
-                (idp, pn, r),
+                (idap, pn, r),
             )
             QMessageBox.about(self, " ", "Данные добавлены")
         except:
@@ -97,16 +95,24 @@ class AccessPoint(QWidget):
 
     # Редактировать строку
     def upentry(self):
-        idp, pn, r = self.idap.text(), self.pn.text(), self.r.text()
-        self.db.cur.execute(
-            "update ACCESSPOINTS set pointid=?,pointname=?,room=? where pointid=?",
-            (idp, pn, r, idp),
+        idap, pn, r = (
+            self.idap.text(),
+            self.pn.text(),
+            self.r.text(),
         )
+        self.db.cur.execute(
+            "update ACCESSPOINTS set POINTNAME=?, ROOM=? where POINTID=?",
+            (pn, r, idap),
+        )
+        self.db.conn.commit()
+        self.tb.updt()
+        self.idap.setText("")
+        self.pn.setText("")
+        self.r.setText("")
         try:
             QMessageBox.about(self, " ", "Данные изменены")
         except:
             QMessageBox.about(self, "Ошибка", "Данные не изменены")
-        self.db.conn.commit()
 
     # удалить из таблицы строку
     def dels(self):

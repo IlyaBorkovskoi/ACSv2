@@ -52,7 +52,7 @@ class Post(QWidget):
         self.btn = QPushButton("Редактировать", self)
         self.btn.resize(150, 40)
         self.btn.move(500, 210)
-        self.btn.clicked.connect(self.ins)
+        self.btn.clicked.connect(self.upentry)
         # кнопка удалить запись
         self.btn = QPushButton("Удалить", self)
         self.btn.resize(150, 40)
@@ -86,14 +86,23 @@ class Post(QWidget):
 
     # Редактировать строку
     def upentry(self):
-        idp = int(self.idp.text())
-        pn = str(self.pn.text())
-        self.db.cur.execute("update post set postname=? where postid=?", (pn, idp))
+        idp, pn = (
+            self.idp.text(),
+            self.pn.text(),
+        )
+        self.db.cur.execute(
+            "update POST set POSTNAME=? where POSTID=?",
+            (pn, idp),
+        )
+        self.db.conn.commit()
+        self.tb.updt()
+        self.idp.setText("")
+        self.pn.setText("")
         try:
             QMessageBox.about(self, " ", "Данные изменены")
         except:
             QMessageBox.about(self, "Ошибка", "Данные не изменены")
-        self.db.conn.commit()
+
 
     # удалить из таблицы строку
     def dels(self):

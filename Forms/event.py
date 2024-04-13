@@ -95,15 +95,24 @@ class Event(QWidget):
 
     # Редактировать строку
     def upentry(self):
-        ide, en, d = self.ide.text(), self.en.text(), self.d.text()
-        self.db.cur.execute(
-            "update EVENT set EVENTNAME=?,DISCRIPTION=? where EVENTID=?", (en, d, ide)
+        ide, en, d = (
+            self.ide.text(),
+            self.en.text(),
+            self.d.text(),
         )
+        self.db.cur.execute(
+            "update EVENT set EVENTNAME=?, DESCRIPTION=? where EVENTID=?",
+            (en, d, ide),
+        )
+        self.db.conn.commit()
+        self.tb.updt()
+        self.ide.setText("")
+        self.en.setText("")
+        self.d.setText("")
         try:
             QMessageBox.about(self, " ", "Данные изменены")
         except:
             QMessageBox.about(self, "Ошибка", "Данные не изменены")
-        self.db.conn.commit()
 
     # удалить из таблицы строку
     def dels(self):

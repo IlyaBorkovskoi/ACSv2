@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import (
 from db_connection import DBConnection
 
 
-class AccessSchedule(QWidget):
+class AccessAccounting(QWidget):
     def __init__(self, menu_window: QWidget):
         super().__init__()
 
@@ -27,8 +27,8 @@ class AccessSchedule(QWidget):
 
         # параметры окна
         self.setGeometry(100, 100, 1000, 600)
-        self.setWindowTitle("График доступа")
-        self.tb = Access_schedule_tb(self)
+        self.setWindowTitle("Учет доступа")
+        self.tb = AccessAccountingTb(self)
 
         # Окно по центру
         qt_rectangle = self.frameGeometry()
@@ -39,37 +39,43 @@ class AccessSchedule(QWidget):
         # поле идентификатор
         self.lbl = QLabel("Номер:", self)
         self.lbl.move(520, 70)
-        self.idas = QLineEdit(self)
-        self.idas.resize(150, 40)
-        self.idas.move(610, 60)
+        self.idaa = QLineEdit(self)
+        self.idaa.resize(150, 40)
+        self.idaa.move(610, 60)
 
         # поле сотрудник
-        self.lbl = QLabel("Сотрудник", self)
+        self.lbl = QLabel("Сотрудник:", self)
         self.lbl.move(520, 120)
         self.ei = QLineEdit(self)
         self.ei.resize(150, 40)
         self.ei.move(610, 110)
 
         # поле дни недели
-        self.lbl = QLabel("Дни недели", self)
+        self.lbl = QLabel("Точка доступа:", self)
         self.lbl.move(520, 170)
-        self.wd = QLineEdit(self)
-        self.wd.resize(150, 40)
-        self.wd.move(610, 160)
+        self.pi = QLineEdit(self)
+        self.pi.resize(150, 40)
+        self.pi.move(610, 160)
 
         # поле время входа
-        self.lbl = QLabel("Время входа", self)
+        self.lbl = QLabel("Событие:", self)
         self.lbl.move(520, 220)
-        self.et = QLineEdit(self)
-        self.et.resize(150, 40)
-        self.et.move(610, 210)
+        self.evi = QLineEdit(self)
+        self.evi.resize(150, 40)
+        self.evi.move(610, 210)
 
         # поле время выхода
-        self.lbl = QLabel("Время выхода", self)
+        self.lbl = QLabel("Дата:", self)
         self.lbl.move(520, 270)
-        self.ext = QLineEdit(self)
-        self.ext.resize(150, 40)
-        self.ext.move(610, 260)
+        self.dt = QLineEdit(self)
+        self.dt.resize(150, 40)
+        self.dt.move(610, 260)
+        # поле время выхода
+        self.lbl = QLabel("Время:", self)
+        self.lbl.move(520, 320)
+        self.t = QLineEdit(self)
+        self.t.resize(150, 40)
+        self.t.move(610, 310)
 
         # кнопка добавить запись
         self.btn = QPushButton("Добавить", self)
@@ -101,6 +107,7 @@ class AccessSchedule(QWidget):
         self.btn.move(800, 400)
         self.btn.clicked.connect(self.close_clicked)
 
+    #Вернуться на главное меню
     def go_back_to_menu(self):
         self.menu_window.show()
         self.close()
@@ -109,25 +116,27 @@ class AccessSchedule(QWidget):
     def upd(self):
         self.db.conn.commit()
         self.tb.updt()
-        self.idas.setText("")
+        self.idaa.setText("")
         self.ei.setText("")
-        self.wd.setText("")
-        self.et.setText("")
-        self.ext.setText("")
+        self.pi.setText("")
+        self.evi.setText("")
+        self.dt.setText("")
+        self.t.setText("")
 
     # добавить таблицу новую строку
     def ins(self):
-        idas, ei, wd, et, ext = (
-            self.idas.text(),
+        idaa,ei,pi,evi,dt,t = (
+            self.idaa.text(),
             self.ei.text(),
-            self.wd.text(),
-            self.et.text(),
-            self.ext.text(),
+            self.pi.text(),
+            self.evi.text(),
+            self.dt.text(),
+            self.t.text()
         )
         try:
             self.db.cur.execute(
-                "insert into ACCESSSCHEDULE (SCHEDULEID,EMPLOYEEID,ACWEEKDAY,ENTRYTIME,EXITTIME) values (?,?,?,?,?)",
-                (idas, ei, wd, et, ext),
+                "insert into ACCESSACCOUNTING (ACCOUNTINGID,EMPLOYEEID,POINTID,EVENTID,ACDATE,ACTIME) values (?,?,?,?,?,?)",
+                (idaa, ei, pi, evi, dt, t)
             )
             QMessageBox.about(self, " ", "Данные добавлены")
         except:
@@ -137,24 +146,26 @@ class AccessSchedule(QWidget):
 
     # Редактировать строку
     def upentry(self):
-        idas, ei, wd, et, ext = (
-            self.idas.text(),
+        idaa, ei, pi, evi, dt, t = (
+            self.idaa.text(),
             self.ei.text(),
-            self.wd.text(),
-            self.et.text(),
-            self.ext.text(),
+            self.pi.text(),
+            self.evi.text(),
+            self.dt.text(),
+            self.t.text()
         )
         self.db.cur.execute(
-            "update ACCESSSCHEDULE set EMPLOYEEID=?, ACWEEKDAY=?,ENTRYTIME=?,EXITTIME=? where SCHEDULEID=?",
-            (ei, wd, et, ext, idas),
+            "update ACCESSACCOUNTING set EMPLOYEEID=?, POINTID=?,EVENTID=?,ACDATE=?,ACTIME=? where ACCOUNTINGID=?",
+            (ei, pi, evi, dt, t, idaa),
         )
         self.db.conn.commit()
         self.tb.updt()
-        self.idas.setText("")
+        self.idaa.setText("")
         self.ei.setText("")
-        self.wd.setText("")
-        self.et.setText("")
-        self.ext.setText("")
+        self.pi.setText("")
+        self.evi.setText("")
+        self.dt.setText("")
+        self.t.setText("")
         try:
             QMessageBox.about(self, " ", "Данные изменены")
         except:
@@ -163,12 +174,11 @@ class AccessSchedule(QWidget):
     # удалить из таблицы строку
     def dels(self):
         try:
-            idas = int(self.idas.text())  # идентификатор строки
-
+            idaa = int(self.idaa.text())  # идентификатор строки
         except:
             QMessageBox.about(self, "Ошибка", "Данные не удалены")
             return
-        self.db.cur.execute("delete from ACCESSSCHEDULE where SCHEDULEID=?", (idas,))
+        self.db.cur.execute("delete from ACCESSACCOUNTING where ACCOUNTINGID=?", (idaa,))
         self.upd()
         QMessageBox.about(self, " ", "Данные удалены")
 
@@ -183,14 +193,14 @@ class AccessSchedule(QWidget):
 
 
 # Класс  таблица График доступа
-class Access_schedule_tb(QTableWidget):
+class AccessAccountingTb(QTableWidget):
     def __init__(self, wg):
         self.wg = wg  # запомнить окно, в котором эта таблица показывается
         self.db = wg.db
 
         super().__init__(wg)
         self.setGeometry(10, 10, 481, 500)
-        self.setColumnCount(5)
+        self.setColumnCount(6)
         self.verticalHeader().hide()
         self.updt()  # обновить таблицу
         self.setEditTriggers(QTableWidget.NoEditTriggers)  # запретить изменять поля
@@ -203,9 +213,9 @@ class Access_schedule_tb(QTableWidget):
         self.clear()
         self.setRowCount(0)
         self.setHorizontalHeaderLabels(
-            ["Номер", "Сотрудник", "День недели", "Время входа", "Время выхода"]
+            ["Номер", "Сотрудник", "Точка доступа", "Событие", "Дата", "Время"]
         )
-        self.db.cur.execute("select * from ACCESSSCHEDULE")
+        self.db.cur.execute("select * from ACCESSACCOUNTING")
         rows = self.db.cur.fetchall()
         i = 0
         for elem in rows:
@@ -219,8 +229,9 @@ class Access_schedule_tb(QTableWidget):
 
     # обработка щелчка мыши по таблице
     def cellClick(self, row, col):  # row - номер строки, col - номер столбца
-        self.wg.idas.setText(self.item(row, 0).text())
+        self.wg.idaa.setText(self.item(row, 0).text())
         self.wg.ei.setText(self.item(row, 1).text().strip())
-        self.wg.wd.setText(self.item(row, 2).text().strip())
-        self.wg.et.setText(self.item(row, 3).text().strip())
-        self.wg.ext.setText(self.item(row, 4).text().strip())
+        self.wg.pi.setText(self.item(row, 2).text().strip())
+        self.wg.evi.setText(self.item(row, 3).text().strip())
+        self.wg.dt.setText(self.item(row, 4).text().strip())
+        self.wg.t.setText(self.item(row, 5).text().strip())
