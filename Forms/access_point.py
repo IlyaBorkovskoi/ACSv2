@@ -18,7 +18,7 @@ class AccessPoint(QWidget):
         self.db = DBConnection()
 
         # параметры окна
-        self.setGeometry(100, 100, 1000, 600)
+        self.setGeometry(100, 100, 700, 520)
         self.setWindowTitle("Точки доступа")
         self.tb = AccessPointTB(self)
         # Окно по центру
@@ -63,7 +63,7 @@ class AccessPoint(QWidget):
         # кнопка выход
         self.btn = QPushButton("Выход", self)
         self.btn.resize(150, 40)
-        self.btn.move(520, 420)
+        self.btn.move(520, 470)
         self.btn.clicked.connect(self.close_clicked)
         # кнопка Главное меню
         self.btn = QPushButton("Главное меню", self)
@@ -141,7 +141,7 @@ class AccessPointTB(QTableWidget):
         self.wg = wg  # запомнить окно, в котором эта таблица показывается
         self.db = wg.db
         super().__init__(wg)
-        self.setGeometry(10, 10, 350, 500)
+        self.setGeometry(10, 10, 380, 500)
         self.setColumnCount(3)
         self.verticalHeader().hide()
         self.updt()  # обновить таблицу

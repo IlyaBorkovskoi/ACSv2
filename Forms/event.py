@@ -17,7 +17,7 @@ class Event(QWidget):
         self.db = DBConnection()
 
         # параметры окна
-        self.setGeometry(100, 100, 1000, 600)
+        self.setGeometry(100, 100, 890, 520)
         self.setWindowTitle("События")
         self.tb = EventTB(self)
 
@@ -63,7 +63,7 @@ class Event(QWidget):
         # кнопка выход
         self.btn = QPushButton("Выход", self)
         self.btn.resize(150, 40)
-        self.btn.move(700, 420)
+        self.btn.move(700, 470)
         self.btn.clicked.connect(self.close_clicked)
         # кнопка Главное меню
         self.btn = QPushButton("Главное меню", self)

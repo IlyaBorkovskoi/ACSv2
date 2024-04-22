@@ -18,7 +18,7 @@ class Post(QWidget):
         self.db = DBConnection()
 
         # параметры окна
-        self.setGeometry(100, 100, 1000, 600)
+        self.setGeometry(100, 100, 600, 520)
         self.setWindowTitle("Должности ")
         self.tb = Post_tb(self)
         # Окно по центру
@@ -26,43 +26,44 @@ class Post(QWidget):
         centerPoint = QDesktopWidget().availableGeometry().center()
         qtRectangle.moveCenter(centerPoint)
         self.move(qtRectangle.topLeft())
-        # кнопка Главное меню
-        self.btn = QPushButton("Главное меню", self)
-        self.btn.resize(150, 40)
-        self.btn.move(500, 310)
-        self.btn.clicked.connect(self.menu_clicked)
+
         # здесь идентификатор
         self.lbl = QLabel("Номер:", self)
-        self.lbl.move(420, 70)
+        self.lbl.move(310, 70)
         self.idp = QLineEdit(self)
         self.idp.resize(150, 40)
-        self.idp.move(500, 60)
+        self.idp.move(390, 60)
         # здесь название должности
         self.lbl = QLabel("Должность:", self)
-        self.lbl.move(420, 120)
+        self.lbl.move(310, 120)
         self.pn = QLineEdit(self)
         self.pn.resize(150, 40)
-        self.pn.move(500, 110)
+        self.pn.move(390, 110)
         # кнопка добавить запись
         self.btn = QPushButton("Добавить", self)
         self.btn.resize(150, 40)
-        self.btn.move(500, 160)
+        self.btn.move(390, 160)
         self.btn.clicked.connect(self.ins)
         # кнопка редактировать
         self.btn = QPushButton("Редактировать", self)
         self.btn.resize(150, 40)
-        self.btn.move(500, 210)
+        self.btn.move(390, 210)
         self.btn.clicked.connect(self.upentry)
         # кнопка удалить запись
         self.btn = QPushButton("Удалить", self)
         self.btn.resize(150, 40)
-        self.btn.move(500, 260)
+        self.btn.move(390, 260)
         self.btn.clicked.connect(self.dels)
         # кнопка выход
         self.btn = QPushButton("Выход", self)
         self.btn.resize(150, 40)
-        self.btn.move(500, 400)
+        self.btn.move(390, 450)
         self.btn.clicked.connect(self.close_clicked)
+        # кнопка Главное меню
+        self.btn = QPushButton("Главное меню", self)
+        self.btn.resize(150, 40)
+        self.btn.move(390, 310)
+        self.btn.clicked.connect(self.menu_clicked)
 
     # обновить таблицу и поля
     def upd(self):

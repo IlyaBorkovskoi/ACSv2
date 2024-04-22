@@ -23,7 +23,7 @@ class AccessAccounting(QWidget):
         self.db = DBConnection()
 
         # параметры окна
-        self.setGeometry(100, 100, 1000, 600)
+        self.setGeometry(100, 100, 1000, 520)
         self.setWindowTitle("Учет доступа")
         self.tb = AccessAccountingTb(self)
 
@@ -77,31 +77,31 @@ class AccessAccounting(QWidget):
         # кнопка добавить запись
         self.btn = QPushButton("Добавить", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 160)
+        self.btn.move(800, 60)
         self.btn.clicked.connect(self.ins)
 
         # кнопка редактировать
         self.btn = QPushButton("Редактировать", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 210)
+        self.btn.move(800, 120)
         self.btn.clicked.connect(self.upentry)
 
         # кнопка удалить запись
         self.btn = QPushButton("Удалить", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 260)
+        self.btn.move(800, 180)
         self.btn.clicked.connect(self.dels)
 
         # кнопка Главное меню
         self.btn = QPushButton("Главное меню", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 310)
+        self.btn.move(800, 240)
         self.btn.clicked.connect(self.go_back_to_menu)
 
         # кнопка выход
         self.btn = QPushButton("Выход", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 400)
+        self.btn.move(800, 470)
         self.btn.clicked.connect(self.close_clicked)
 
     #Вернуться на главное меню

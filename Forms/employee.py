@@ -21,7 +21,7 @@ class Employees(QWidget):
         self.db = DBConnection()
 
         # параметры окна
-        self.setGeometry(100, 100, 1000, 600)
+        self.setGeometry(100, 100, 1200, 600)
         self.setWindowTitle("Сотрудники")
         self.tb = Employees_tb(self)
         # Окно по центру
@@ -32,66 +32,77 @@ class Employees(QWidget):
 
         # поле идентификатор
         self.lbl = QLabel("Номер:", self)
-        self.lbl.move(560, 70)
+        self.lbl.move(700, 85)
         self.idem = QLineEdit(self)
         self.idem.resize(150, 40)
-        self.idem.move(650, 60)
+        self.idem.move(800, 80)
         # поле Должность
         self.lbl = QLabel("Должность:", self)
-        self.lbl.move(560, 120)
+        self.lbl.move(700, 135)
         self.pi = QLineEdit(self)
         self.pi.resize(150, 40)
-        self.pi.move(650, 110)
+        self.pi.move(800, 130)
         # поле Фамилия
         self.lbl = QLabel("Фамилия:", self)
-        self.lbl.move(560, 170)
+        self.lbl.move(700, 185)
         self.ln = QLineEdit(self)
         self.ln.resize(150, 40)
-        self.ln.move(650, 160)
+        self.ln.move(800, 180)
         # поле Имя
         self.lbl = QLabel("Имя:", self)
-        self.lbl.move(560, 220)
+        self.lbl.move(700, 235)
         self.fn = QLineEdit(self)
         self.fn.resize(150, 40)
-        self.fn.move(650, 210)
+        self.fn.move(800, 230)
         # поле Отчество
         self.lbl = QLabel("Отчество:", self)
-        self.lbl.move(560, 270)
+        self.lbl.move(700, 285)
         self.mn = QLineEdit(self)
         self.mn.resize(150, 40)
-        self.mn.move(650, 260)
+        self.mn.move(800, 280)
         # поле Ключ
         self.lbl = QLabel("Ключ:", self)
-        self.lbl.move(560, 320)
+        self.lbl.move(700, 335)
         self.k = QLineEdit(self)
         self.k.resize(150, 40)
-        self.k.move(650, 310)
+        self.k.move(800, 330)
         # кнопка добавить запись
         self.btn = QPushButton("Добавить", self)
         self.btn.resize(150, 40)
-        self.btn.move(850, 160)
+        self.btn.move(1000, 80)
         self.btn.clicked.connect(self.ins)
         # кнопка редактировать
         self.btn = QPushButton("Редактировать", self)
         self.btn.resize(150, 40)
-        self.btn.move(850, 210)
+        self.btn.move(1000, 160)
         self.btn.clicked.connect(self.upentry)
         # кнопка удалить запись
         self.btn = QPushButton("Удалить", self)
         self.btn.resize(150, 40)
-        self.btn.move(850, 260)
+        self.btn.move(1000, 240)
         self.btn.clicked.connect(self.dels)
         # кнопка Главное меню
         self.btn = QPushButton("Главное меню", self)
         self.btn.resize(150, 40)
-        self.btn.move(850, 310)
+        self.btn.move(1000, 320)
         self.btn.clicked.connect(self.menu_clicked)
 
         # кнопка выход
         self.btn = QPushButton("Выход", self)
         self.btn.resize(150, 40)
-        self.btn.move(850, 500)
+        self.btn.move(1000, 500)
         self.btn.clicked.connect(self.close_clicked)
+
+        # обновить таблицу и поля
+    def upd(self):
+        self.db.conn.commit()
+        self.tb.updt()
+        self.idem.setText("")
+        self.pi.setText("")
+        self.ln.setText("")
+        self.fn.setText("")
+        self.mn.setText("")
+        self.k.setText("")
 
     # добавить таблицу новую строку
     def ins(self):
@@ -108,6 +119,7 @@ class Employees(QWidget):
                 "insert into EMPLOYEES (EMPLOYEEID,POSTID,EMPLASTNAME,EMPFIRSTNAME,MIDLNAME,EMPKEY) values (?,?,?,?,?,?)",
                 (idem, pi, ln, fn, mn, k),
             )
+            self.db.cur.fetchall()
             QMessageBox.about(self, " ", "Данные добавлены")
         except:
             QMessageBox.about(self, "Ошибка", "Данные не добавлены")
@@ -170,7 +182,7 @@ class Employees_tb(QTableWidget):
         self.db = wg.db
 
         super().__init__(wg)
-        self.setGeometry(10, 10, 530, 500)
+        self.setGeometry(10, 10, 660, 500)
         self.setColumnCount(6)
         self.verticalHeader().hide()
         self.updt()  # обновить таблицу
@@ -186,7 +198,7 @@ class Employees_tb(QTableWidget):
         self.setHorizontalHeaderLabels(
             ["Номер", "Должность", "Фамилия", "Имя", "Отчество", "Ключ"]
         )
-        self.db.cur.execute("select * from EMPLOYEES")
+        self.db.cur.execute("select * from EMPLOYEES order by EMPLASTNAME")
         rows = self.db.cur.fetchall()
         i = 0
         for elem in rows:

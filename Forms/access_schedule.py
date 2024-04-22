@@ -1,8 +1,4 @@
-import sys
-import fdb
-from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (
-    QApplication,
     QTableWidget,
     QMessageBox,
     QLabel,
@@ -26,7 +22,7 @@ class AccessSchedule(QWidget):
         self.db = DBConnection()
 
         # параметры окна
-        self.setGeometry(100, 100, 1000, 600)
+        self.setGeometry(100, 100, 1000, 520)
         self.setWindowTitle("График доступа")
         self.tb = Access_schedule_tb(self)
 
@@ -74,31 +70,31 @@ class AccessSchedule(QWidget):
         # кнопка добавить запись
         self.btn = QPushButton("Добавить", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 160)
+        self.btn.move(800, 60)
         self.btn.clicked.connect(self.ins)
 
         # кнопка редактировать
         self.btn = QPushButton("Редактировать", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 210)
+        self.btn.move(800, 125)
         self.btn.clicked.connect(self.upentry)
 
         # кнопка удалить запись
         self.btn = QPushButton("Удалить", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 260)
+        self.btn.move(800, 190)
         self.btn.clicked.connect(self.dels)
 
         # кнопка Главное меню
         self.btn = QPushButton("Главное меню", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 310)
+        self.btn.move(800, 260)
         self.btn.clicked.connect(self.go_back_to_menu)
 
         # кнопка выход
         self.btn = QPushButton("Выход", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 400)
+        self.btn.move(800, 450)
         self.btn.clicked.connect(self.close_clicked)
 
     def go_back_to_menu(self):
