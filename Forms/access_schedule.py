@@ -113,60 +113,60 @@ class AccessSchedule(QWidget):
 
     # добавить таблицу новую строку
     def ins(self):
-        idas, ei, wd, et, ext = (
-            self.idas.text(),
-            self.ei.text(),
-            self.wd.text(),
-            self.et.text(),
-            self.ext.text(),
-        )
         try:
+            idas, ei, wd, et, ext = (
+                self.idas.text(),
+                self.ei.text(),
+                self.wd.text(),
+                self.et.text(),
+                self.ext.text(),
+            )
             self.db.cur.execute(
                 "insert into ACCESSSCHEDULE (SCHEDULEID,EMPLOYEEID,ACWEEKDAY,ENTRYTIME,EXITTIME) values (?,?,?,?,?)",
                 (idas, ei, wd, et, ext),
             )
-            QMessageBox.about(self, " ", "Данные добавлены")
+            QMessageBox.about(self, " ", "Данные добавлены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не добавлены")
+            QMessageBox.about(self, "Ошибка!", "Данные не добавлены, повторите попытку")
             pass
         self.upd()
 
     # Редактировать строку
     def upentry(self):
-        idas, ei, wd, et, ext = (
-            self.idas.text(),
-            self.ei.text(),
-            self.wd.text(),
-            self.et.text(),
-            self.ext.text(),
-        )
-        self.db.cur.execute(
-            "update ACCESSSCHEDULE set EMPLOYEEID=?, ACWEEKDAY=?,ENTRYTIME=?,EXITTIME=? where SCHEDULEID=?",
-            (ei, wd, et, ext, idas),
-        )
-        self.db.conn.commit()
-        self.tb.updt()
-        self.idas.setText("")
-        self.ei.setText("")
-        self.wd.setText("")
-        self.et.setText("")
-        self.ext.setText("")
         try:
+            idas, ei, wd, et, ext = (
+                self.idas.text(),
+                self.ei.text(),
+                self.wd.text(),
+                self.et.text(),
+                self.ext.text(),
+            )
+            self.db.cur.execute(
+                "update ACCESSSCHEDULE set EMPLOYEEID=?, ACWEEKDAY=?,ENTRYTIME=?,EXITTIME=? where SCHEDULEID=?",
+                (ei, wd, et, ext, idas),
+            )
+            self.db.conn.commit()
+            self.tb.updt()
+            self.idas.setText("")
+            self.ei.setText("")
+            self.wd.setText("")
+            self.et.setText("")
+            self.ext.setText("")
             QMessageBox.about(self, " ", "Данные изменены")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не изменены")
+            QMessageBox.about(self, "Ошибка", "Данные не изменены, повторите попытку")
 
     # удалить из таблицы строку
     def dels(self):
         try:
             idas = int(self.idas.text())  # идентификатор строки
-
+            self.db.cur.execute("delete from ACCESSSCHEDULE where SCHEDULEID=?", (idas,))
+            QMessageBox.about(self, " ", "Данные удалены")
         except:
             QMessageBox.about(self, "Ошибка", "Данные не удалены")
             return
-        self.db.cur.execute("delete from ACCESSSCHEDULE where SCHEDULEID=?", (idas,))
         self.upd()
-        QMessageBox.about(self, " ", "Данные удалены")
+
 
     # Закрыть окно
     def close_clicked(self):

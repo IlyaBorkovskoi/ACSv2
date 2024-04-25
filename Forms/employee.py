@@ -106,64 +106,64 @@ class Employees(QWidget):
 
     # добавить таблицу новую строку
     def ins(self):
-        idem, pi, ln, fn, mn, k = (
-            self.idem.text(),
-            self.pi.text(),
-            self.ln.text(),
-            self.fn.text(),
-            self.mn.text(),
-            self.k.text(),
-        )
         try:
+            idem, pi, ln, fn, mn, k = (
+                self.idem.text(),
+                self.pi.text(),
+                self.ln.text(),
+                self.fn.text(),
+                self.mn.text(),
+                self.k.text(),
+            )
             self.db.cur.execute(
                 "insert into EMPLOYEES (EMPLOYEEID,POSTID,EMPLASTNAME,EMPFIRSTNAME,MIDLNAME,EMPKEY) values (?,?,?,?,?,?)",
                 (idem, pi, ln, fn, mn, k),
             )
-            self.db.cur.fetchall()
-            QMessageBox.about(self, " ", "Данные добавлены")
+            QMessageBox.about(self, " ", "Данные добавлены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не добавлены")
+            QMessageBox.about(self, "Ошибка!", "Данные не добавлены2, повторите попытку")
             pass
         self.upd()
 
     # Редактировать строку
     def upentry(self):
-        idem, pi, ln, fn, mn, k = (
-            self.idem.text(),
-            self.pi.text(),
-            self.ln.text(),
-            self.fn.text(),
-            self.mn.text(),
-            self.k.text(),
-        )
-        self.db.cur.execute(
-            "update EMPLOYEES set POSTID=?,EMPLASTNAME=?,EMPFIRSTNAME=?,MIDLNAME=?,EMPKEY=? where EMPLOYEEID=?",
-            (pi, ln, fn, mn, k, idem),
-        )
-        self.db.conn.commit()
-        self.tb.updt()
-        self.idem.setText("")
-        self.pi.setText("")
-        self.ln.setText("")
-        self.fn.setText("")
-        self.mn.setText("")
-        self.k.setText("")
         try:
-            QMessageBox.about(self, " ", "Данные изменены")
+            idem, pi, ln, fn, mn, k = (
+                self.idem.text(),
+                self.pi.text(),
+                self.ln.text(),
+                self.fn.text(),
+                self.mn.text(),
+                self.k.text(),
+            )
+            self.db.cur.execute(
+                "update EMPLOYEES set POSTID=?,EMPLASTNAME=?,EMPFIRSTNAME=?,MIDLNAME=?,EMPKEY=? where EMPLOYEEID=?",
+                (pi, ln, fn, mn, k, idem),
+            )
+            self.db.conn.commit()
+            self.tb.updt()
+            self.idem.setText("")
+            self.pi.setText("")
+            self.ln.setText("")
+            self.fn.setText("")
+            self.mn.setText("")
+            self.k.setText("")
+            QMessageBox.about(self, " ", "Данные изменены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не изменены")
+            QMessageBox.about(self, "Ошибка!", "Данные не изменены, повторите попытку")
         self.db.conn.commit()
 
     # удалить из таблицы строку
     def dels(self):
         try:
             idem = int(self.idem.text())  # идентификатор строки
+            self.db.cur.execute("delete from EMPLOYEES where EMPLOYEEID=?", (idem,))
+            QMessageBox.about(self, " ", "Данные удалены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не удалены")
+            QMessageBox.about(self, "Ошибка!", "Данные не удалены, повторите попытку")
             return
-        self.db.cur.execute("delete from EMPLOYEES where EMPLOYEEID=?", (idem,))
         self.upd()
-        QMessageBox.about(self, " ", "Данные удалены")
+
 
     # Закрыть окно
     def close_clicked(self):

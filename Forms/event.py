@@ -81,48 +81,49 @@ class Event(QWidget):
 
     # добавить таблицу новую строку
     def ins(self):
-        ide, en, d = self.ide.text(), self.en.text(), self.d.text()
         try:
+            ide, en, d = self.ide.text(), self.en.text(), self.d.text()
             self.db.cur.execute(
                 "insert into EVENT (EVENTID,EVENTNAME,DESCRIPTION) values (?,?,?)",
                 (ide, en, d),
             )
-            QMessageBox.about(self, " ", "Данные добавлены")
+            QMessageBox.about(self, " ", "Данные добавлены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не добавлены")
+            QMessageBox.about(self, "Ошибка!", "Данные не добавлены, повторите попытку")
             pass
         self.upd()
 
     # Редактировать строку
     def upentry(self):
-        ide, en, d = (
-            self.ide.text(),
-            self.en.text(),
-            self.d.text(),
-        )
-        self.db.cur.execute(
-            "update EVENT set EVENTNAME=?, DESCRIPTION=? where EVENTID=?",
-            (en, d, ide),
-        )
-        self.db.conn.commit()
-        self.tb.updt()
-        self.ide.setText("")
-        self.en.setText("")
-        self.d.setText("")
         try:
-            QMessageBox.about(self, " ", "Данные изменены")
+            ide, en, d = (
+                self.ide.text(),
+                self.en.text(),
+                self.d.text(),
+            )
+            self.db.cur.execute(
+                "update EVENT set EVENTNAME=?, DESCRIPTION=? where EVENTID=?",
+                (en, d, ide),
+            )
+            self.db.conn.commit()
+            self.tb.updt()
+            self.ide.setText("")
+            self.en.setText("")
+            self.d.setText("")
+            QMessageBox.about(self, " ", "Данные изменены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не изменены")
+            QMessageBox.about(self, "Ошибка!", "Данные не изменены, повторите попытку")
 
     # удалить из таблицы строку
     def dels(self):
         try:
             ide = int(self.ide.text())  # идентификатор строки
+            self.db.cur.execute("delete from EVENT where EVENTID=?", (ide,))
             QMessageBox.about(self, " ", "Данные удалены")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не удалены")
+            QMessageBox.about(self, "Ошибка", "Данные не удалены, повторите попытку")
             return
-        self.db.cur.execute("delete from EVENT where EVENTID=?", (ide,))
+
         self.upd()
 
     # Закрыть окно

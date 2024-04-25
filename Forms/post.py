@@ -74,46 +74,46 @@ class Post(QWidget):
 
     # добавить таблицу новую строку
     def ins(self):
-        idp, pn = self.idp.text(), self.pn.text()
         try:
+            idp, pn = self.idp.text(), self.pn.text()
             self.db.cur.execute(
                 "insert into post (postid,postname) values (?,?)", (idp, pn)
             )
-            QMessageBox.about(self, " ", "Данные добавлены")
+            QMessageBox.about(self, " ", "Данные добавлены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не добавлены")
+            QMessageBox.about(self, "Ошибка!", "Данные не добавлены, попробуйте попытку")
             pass
         self.upd()
 
     # Редактировать строку
     def upentry(self):
-        idp, pn = (
-            self.idp.text(),
-            self.pn.text(),
-        )
-        self.db.cur.execute(
-            "update POST set POSTNAME=? where POSTID=?",
-            (pn, idp),
-        )
-        self.db.conn.commit()
-        self.tb.updt()
-        self.idp.setText("")
-        self.pn.setText("")
         try:
-            QMessageBox.about(self, " ", "Данные изменены")
+            idp, pn = (
+                self.idp.text(),
+                self.pn.text(),
+            )
+            self.db.cur.execute(
+                "update POST set POSTNAME=? where POSTID=?",
+                (pn, idp),
+            )
+            self.db.conn.commit()
+            self.tb.updt()
+            self.idp.setText("")
+            self.pn.setText("")
+            QMessageBox.about(self, " ", "Данные изменены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не изменены")
+            QMessageBox.about(self, "Ошибка!", "Данные не изменены, повторите попытку")
 
 
     # удалить из таблицы строку
     def dels(self):
         try:
             idp = int(self.idp.text())  # идентификатор строки
-            QMessageBox.about(self, " ", "Данные удалены")
+            self.db.cur.execute("delete from post where postid=?", (idp,))
+            QMessageBox.about(self, " ", "Данные удалены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не удалены")
+            QMessageBox.about(self, "Ошибка!", "Данные не удалены, повторите попытку")
             return
-        self.db.cur.execute("delete from post where postid=?", (idp,))
         self.upd()
 
     # Закрыть окно

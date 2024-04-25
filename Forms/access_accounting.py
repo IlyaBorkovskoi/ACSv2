@@ -122,63 +122,65 @@ class AccessAccounting(QWidget):
 
     # добавить таблицу новую строку
     def ins(self):
-        idaa,ei,pi,evi,dt,t = (
-            self.idaa.text(),
-            self.ei.text(),
-            self.pi.text(),
-            self.evi.text(),
-            self.dt.text(),
-            self.t.text()
-        )
+
         try:
+            idaa, ei, pi, evi, dt, t = (
+                self.idaa.text(),
+                self.ei.text(),
+                self.pi.text(),
+                self.evi.text(),
+                self.dt.text(),
+                self.t.text()
+            )
             self.db.cur.execute(
                 "insert into ACCESSACCOUNTING (ACCOUNTINGID,EMPLOYEEID,POINTID,EVENTID,ACDATE,ACTIME) values (?,?,?,?,?,?)",
                 (idaa, ei, pi, evi, dt, t)
             )
-            QMessageBox.about(self, " ", "Данные добавлены")
+            QMessageBox.about(self, " ", "Данные добавлены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не добавлены")
+            QMessageBox.about(self, "Ошибка!", "Данные не добавлены, повторите попытку")
             pass
         self.upd()
 
     # Редактировать строку
     def upentry(self):
-        idaa, ei, pi, evi, dt, t = (
-            self.idaa.text(),
-            self.ei.text(),
-            self.pi.text(),
-            self.evi.text(),
-            self.dt.text(),
-            self.t.text()
-        )
-        self.db.cur.execute(
-            "update ACCESSACCOUNTING set EMPLOYEEID=?, POINTID=?,EVENTID=?,ACDATE=?,ACTIME=? where ACCOUNTINGID=?",
-            (ei, pi, evi, dt, t, idaa),
-        )
-        self.db.conn.commit()
-        self.tb.updt()
-        self.idaa.setText("")
-        self.ei.setText("")
-        self.pi.setText("")
-        self.evi.setText("")
-        self.dt.setText("")
-        self.t.setText("")
         try:
-            QMessageBox.about(self, " ", "Данные изменены")
+            idaa, ei, pi, evi, dt, t = (
+                self.idaa.text(),
+                self.ei.text(),
+                self.pi.text(),
+                self.evi.text(),
+                self.dt.text(),
+                self.t.text()
+            )
+            self.db.cur.execute(
+                "update ACCESSACCOUNTING set EMPLOYEEID=?, POINTID=?,EVENTID=?,ACDATE=?,ACTIME=? where ACCOUNTINGID=?",
+                (ei, pi, evi, dt, t, idaa),
+            )
+            self.db.conn.commit()
+            self.tb.updt()
+            self.idaa.setText("")
+            self.ei.setText("")
+            self.pi.setText("")
+            self.evi.setText("")
+            self.dt.setText("")
+            self.t.setText("")
+            QMessageBox.about(self, " ", "Данные изменены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не изменены")
+            QMessageBox.about(self, "Ошибка!", "Данные не изменены, повторите попытку")
         self.db.conn.commit()
 
     # удалить из таблицы строку
     def dels(self):
         try:
-            idaa = int(self.idaa.text())  # идентификатор строки
+            idaa = int(self.idaa.text())
+            self.db.cur.execute("delete from ACCESSACCOUNTING where ACCOUNTINGID=?", (idaa,))# идентификатор строки
+            QMessageBox.about(self, " ", "Данные удалены")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не удалены")
+            QMessageBox.about(self, "Ошибка!", "Данные не удалены")
             return
-        self.db.cur.execute("delete from ACCESSACCOUNTING where ACCOUNTINGID=?", (idaa,))
         self.upd()
-        QMessageBox.about(self, " ", "Данные удалены")
+
 
     # Закрыть окно
     def close_clicked(self):

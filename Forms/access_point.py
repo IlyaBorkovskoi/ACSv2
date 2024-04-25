@@ -81,48 +81,48 @@ class AccessPoint(QWidget):
 
     # добавить таблицу новую строку
     def ins(self):
-        idap, pn, r = self.idap.text(), self.pn.text(), self.r.text()
         try:
+            idap, pn, r = self.idap.text(), self.pn.text(), self.r.text()
             self.db.cur.execute(
                 "insert into ACCESSPOINTS (POINTID,POINTNAME,ROOM) values (?,?,?)",
                 (idap, pn, r),
             )
-            QMessageBox.about(self, " ", "Данные добавлены")
+            QMessageBox.about(self, " ", "Данные добавлены!")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не добавлены")
+            QMessageBox.about(self, "Ошибка!", "Данные не добавлены, повторите попытку")
             pass
         self.upd()
 
     # Редактировать строку
     def upentry(self):
-        idap, pn, r = (
-            self.idap.text(),
-            self.pn.text(),
-            self.r.text(),
-        )
-        self.db.cur.execute(
-            "update ACCESSPOINTS set POINTNAME=?, ROOM=? where POINTID=?",
-            (pn, r, idap),
-        )
-        self.db.conn.commit()
-        self.tb.updt()
-        self.idap.setText("")
-        self.pn.setText("")
-        self.r.setText("")
         try:
+            idap, pn, r = (
+                self.idap.text(),
+                self.pn.text(),
+                self.r.text(),
+            )
+            self.db.cur.execute(
+                "update ACCESSPOINTS set POINTNAME=?, ROOM=? where POINTID=?",
+                (pn, r, idap),
+            )
+            self.db.conn.commit()
+            self.tb.updt()
+            self.idap.setText("")
+            self.pn.setText("")
+            self.r.setText("")
             QMessageBox.about(self, " ", "Данные изменены")
         except:
-            QMessageBox.about(self, "Ошибка", "Данные не изменены")
+            QMessageBox.about(self, "Ошибка", "Данные не изменены, повторите попытку")
 
     # удалить из таблицы строку
     def dels(self):
         try:
             idap = int(self.idap.text())  # идентификатор строки
             QMessageBox.about(self, " ", "Данные удалены")
+            self.db.cur.execute("delete from ACCESSPOINTS where POINTID=?", (idap,))
         except:
             QMessageBox.about(self, "Ошибка", "Данные не удалены")
             return
-        self.db.cur.execute("delete from ACCESSPOINTS where POINTID=?", (idap,))
         self.upd()
 
     # Закрыть окно
