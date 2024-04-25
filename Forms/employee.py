@@ -1,8 +1,4 @@
-import sys
-import fdb
-from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (
-    QApplication,
     QTableWidget,
     QMessageBox,
     QLabel,
@@ -22,6 +18,7 @@ class Employees(QWidget):
 
         # параметры окна
         self.setGeometry(100, 100, 1200, 600)
+        self.setFixedSize(1200, 600)
         self.setWindowTitle("Сотрудники")
         self.tb = Employees_tb(self)
         # Окно по центру
@@ -121,7 +118,7 @@ class Employees(QWidget):
             )
             QMessageBox.about(self, " ", "Данные добавлены!")
         except:
-            QMessageBox.about(self, "Ошибка!", "Данные не добавлены2, повторите попытку")
+            QMessageBox.about(self, "Ошибка!", "Данные не добавлены, повторите попытку")
             pass
         self.upd()
 

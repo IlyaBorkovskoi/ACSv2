@@ -1,4 +1,3 @@
-
 from PyQt5.QtWidgets import (
     QTableWidget,
     QMessageBox,
@@ -19,6 +18,7 @@ class AccessPoint(QWidget):
 
         # параметры окна
         self.setGeometry(100, 100, 700, 520)
+        self.setFixedSize(700, 520)
         self.setWindowTitle("Точки доступа")
         self.tb = AccessPointTB(self)
         # Окно по центру

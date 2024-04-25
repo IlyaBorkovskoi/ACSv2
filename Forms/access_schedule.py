@@ -23,6 +23,7 @@ class AccessSchedule(QWidget):
 
         # параметры окна
         self.setGeometry(100, 100, 1000, 520)
+        self.setFixedSize(1000, 520)
         self.setWindowTitle("График доступа")
         self.tb = Access_schedule_tb(self)
 

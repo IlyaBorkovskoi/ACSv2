@@ -6,7 +6,6 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtWidgets import QTableWidgetItem, QWidget, QPushButton, QLineEdit
 
-
 from db_connection import DBConnection
 
 
@@ -19,7 +18,9 @@ class Post(QWidget):
 
         # параметры окна
         self.setGeometry(100, 100, 600, 520)
+        self.setFixedSize(600, 520)
         self.setWindowTitle("Должности ")
+
         self.tb = Post_tb(self)
         # Окно по центру
         qtRectangle = self.frameGeometry()

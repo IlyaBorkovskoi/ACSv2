@@ -1,8 +1,7 @@
-from PyQt5.QtGui import QFont
-
+from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtWidgets import (
     QLabel,
-    QDesktopWidget,
+    QDesktopWidget, QHBoxLayout,
 )
 from PyQt5.QtWidgets import (
     QWidget,
@@ -28,13 +27,23 @@ class MainWindow(QWidget):
         self.create_main_window()
         self.create_form_buttons()
 
+
     def create_main_window(self):
         # Создаём окошко
         self.setGeometry(100, 100, 700, 500)
+        self.setFixedSize(700,500)
         self.setWindowTitle("Система контроля и управления доступом")
         self.lbl = QLabel("    Система контроля \nи управления доступом", self)
         self.lbl.setFont(QFont("Times", 15))
         self.lbl.move(330, 40)
+        hbox = QHBoxLayout(self)
+        pixmap = QPixmap("mm.png")
+        lbl = QLabel(self)
+        lbl.setPixmap(pixmap)
+        hbox.addWidget(lbl)
+        self.setLayout(hbox)
+
+
 
         # Ставим окно в центр
         qt_rectangle = self.frameGeometry()

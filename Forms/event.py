@@ -18,6 +18,7 @@ class Event(QWidget):
 
         # параметры окна
         self.setGeometry(100, 100, 890, 520)
+        self.setFixedSize(890, 520)
         self.setWindowTitle("События")
         self.tb = EventTB(self)
 

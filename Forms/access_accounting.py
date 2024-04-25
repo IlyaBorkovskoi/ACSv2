@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import (
-    QApplication,
     QTableWidget,
     QMessageBox,
     QLabel,
@@ -24,6 +23,7 @@ class AccessAccounting(QWidget):
 
         # параметры окна
         self.setGeometry(100, 100, 1000, 520)
+        self.setFixedSize(1000, 520)
         self.setWindowTitle("Учет доступа")
         self.tb = AccessAccountingTb(self)
 
