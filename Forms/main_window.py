@@ -36,12 +36,25 @@ class MainWindow(QWidget):
         self.lbl = QLabel("    Система контроля \nи управления доступом", self)
         self.lbl.setFont(QFont("Times", 15))
         self.lbl.move(330, 40)
-        hbox = QHBoxLayout(self)
-        pixmap = QPixmap("mm.png")
-        lbl = QLabel(self)
-        lbl.setPixmap(pixmap)
-        hbox.addWidget(lbl)
-        self.setLayout(hbox)
+        # hbox = QHBoxLayout(self)
+        # pixmap = QPixmap("mm.png")
+        # lbl = QLabel(self)
+        # lbl.setPixmap(pixmap)
+        # hbox.addWidget(lbl)
+        # self.setLayout(hbox)
+        self.setStyleSheet("""
+            * {
+                background-color: rgb(234, 253, 255);
+                }
+            .QPushButton {
+                background-color: rgb(128, 245, 255); 
+                border: 1px solid black; 
+                border-radius: 10px;
+                }
+            .QPushButton:hover {
+                background-color: rgb(131, 224, 232)
+                }
+        """)
 
 
 

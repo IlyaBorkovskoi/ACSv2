@@ -20,13 +20,37 @@ class Post(QWidget):
         self.setGeometry(100, 100, 600, 520)
         self.setFixedSize(600, 520)
         self.setWindowTitle("Должности ")
-
         self.tb = Post_tb(self)
         # Окно по центру
         qtRectangle = self.frameGeometry()
         centerPoint = QDesktopWidget().availableGeometry().center()
         qtRectangle.moveCenter(centerPoint)
         self.move(qtRectangle.topLeft())
+
+        # Оформление
+        self.tb.setStyleSheet("""
+                                    background-color: white;
+                        """)
+
+        self.setStyleSheet("""
+                                    * {
+                                        background-color: rgb(234, 253, 255);
+                                        }
+                                    .QPushButton {
+                                        background-color: rgb(128, 245, 255); 
+                                        border: 1px solid black; 
+                                        border-radius: 10px;
+                                        }
+                                    .QPushButton:hover {
+                                        background-color: rgb(131, 224, 232)
+                                        }
+                                    .QLineEdit {
+                                        background-color: white;
+                                        border: 1px solid black;
+                                        border-radius: 10px;
+                                        }
+
+                                """)
 
         # здесь идентификатор
         self.lbl = QLabel("Номер:", self)

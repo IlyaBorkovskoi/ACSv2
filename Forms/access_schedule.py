@@ -33,6 +33,31 @@ class AccessSchedule(QWidget):
         qt_rectangle.moveCenter(center_point)
         self.move(qt_rectangle.topLeft())
 
+        # Оформление
+        self.tb.setStyleSheet("""
+                                    background-color: white;
+                        """)
+
+        self.setStyleSheet("""
+                                    * {
+                                        background-color: rgb(234, 253, 255);
+                                        }
+                                    .QPushButton {
+                                        background-color: rgb(128, 245, 255); 
+                                        border: 1px solid black; 
+                                        border-radius: 10px;
+                                        }
+                                    .QPushButton:hover {
+                                        background-color: rgb(131, 224, 232)
+                                        }
+                                    .QLineEdit {
+                                        background-color: white;
+                                        border: 1px solid black;
+                                        border-radius: 10px;
+                                        }
+
+                                """)
+
         # поле идентификатор
         self.lbl = QLabel("Номер:", self)
         self.lbl.move(520, 70)

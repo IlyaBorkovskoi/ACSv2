@@ -27,6 +27,30 @@ class Employees(QWidget):
         qtRectangle.moveCenter(centerPoint)
         self.move(qtRectangle.topLeft())
 
+        self.tb.setStyleSheet("""
+                    background-color: white;
+        """)
+
+        self.setStyleSheet("""
+                    * {
+                        background-color: rgb(234, 253, 255);
+                        }
+                    .QPushButton {
+                        background-color: rgb(128, 245, 255); 
+                        border: 1px solid black; 
+                        border-radius: 10px;
+                        }
+                    .QPushButton:hover {
+                        background-color: rgb(131, 224, 232)
+                        }
+                    .QLineEdit {
+                        background-color: white;
+                        border: 1px solid black;
+                        border-radius: 10px;
+                        }
+                    
+                """)
+
         # поле идентификатор
         self.lbl = QLabel("Номер:", self)
         self.lbl.move(700, 85)
@@ -66,7 +90,7 @@ class Employees(QWidget):
         # кнопка добавить запись
         self.btn = QPushButton("Добавить", self)
         self.btn.resize(150, 40)
-        self.btn.move(1000, 80)
+        self.btn.move(1000, 81)
         self.btn.clicked.connect(self.ins)
         # кнопка редактировать
         self.btn = QPushButton("Редактировать", self)
@@ -76,12 +100,12 @@ class Employees(QWidget):
         # кнопка удалить запись
         self.btn = QPushButton("Удалить", self)
         self.btn.resize(150, 40)
-        self.btn.move(1000, 240)
+        self.btn.move(1000, 250)
         self.btn.clicked.connect(self.dels)
         # кнопка Главное меню
         self.btn = QPushButton("Главное меню", self)
         self.btn.resize(150, 40)
-        self.btn.move(1000, 320)
+        self.btn.move(1000, 330)
         self.btn.clicked.connect(self.menu_clicked)
 
         # кнопка выход
