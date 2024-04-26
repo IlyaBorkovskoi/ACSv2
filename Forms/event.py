@@ -34,24 +34,23 @@ class Event(QWidget):
                         """)
 
         self.setStyleSheet("""
-                                    * {
-                                        background-color: rgb(234, 253, 255);
-                                        }
-                                    .QPushButton {
-                                        background-color: rgb(128, 245, 255); 
-                                        border: 1px solid black; 
-                                        border-radius: 10px;
-                                        }
-                                    .QPushButton:hover {
-                                        background-color: rgb(131, 224, 232)
-                                        }
-                                    .QLineEdit {
-                                        background-color: white;
-                                        border: 1px solid black;
-                                        border-radius: 10px;
-                                        }
-
-                                """)
+                            * {
+                                background-color: rgb(223, 235, 250);
+                                }
+                            .QPushButton {
+                                background-color: rgb(171, 204, 249); 
+                                border: 1px solid black; 
+                                border-radius: 10px;
+                                }
+                            .QPushButton:hover {
+                                background-color: rgb(207, 203, 249)
+                                }
+                            .QLineEdit {
+                                background-color: white;
+                                border: 1px solid black;
+                                border-radius: 10px;
+                                }
+                        """)
 
         # поле идентификатор
         self.lbl = QLabel("Номер:", self)

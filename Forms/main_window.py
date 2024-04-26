@@ -1,7 +1,7 @@
-from PyQt5.QtGui import QFont, QPixmap
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (
     QLabel,
-    QDesktopWidget, QHBoxLayout,
+    QDesktopWidget
 )
 from PyQt5.QtWidgets import (
     QWidget,
@@ -34,29 +34,8 @@ class MainWindow(QWidget):
         self.setFixedSize(700,500)
         self.setWindowTitle("Система контроля и управления доступом")
         self.lbl = QLabel("    Система контроля \nи управления доступом", self)
-        self.lbl.setFont(QFont("Times", 15))
-        self.lbl.move(330, 40)
-        # hbox = QHBoxLayout(self)
-        # pixmap = QPixmap("mm.png")
-        # lbl = QLabel(self)
-        # lbl.setPixmap(pixmap)
-        # hbox.addWidget(lbl)
-        # self.setLayout(hbox)
-        self.setStyleSheet("""
-            * {
-                background-color: rgb(234, 253, 255);
-                }
-            .QPushButton {
-                background-color: rgb(128, 245, 255); 
-                border: 1px solid black; 
-                border-radius: 10px;
-                }
-            .QPushButton:hover {
-                background-color: rgb(131, 224, 232)
-                }
-        """)
-
-
+        self.lbl.setFont(QFont("Times", 19, QFont.Bold))
+        self.lbl.move(170, 40)
 
         # Ставим окно в центр
         qt_rectangle = self.frameGeometry()
@@ -64,46 +43,62 @@ class MainWindow(QWidget):
         qt_rectangle.moveCenter(central_point)
         self.move(qt_rectangle.topLeft())
 
+        # Оформление
+        self.setStyleSheet("""
+                    * {
+                        background-color: rgb(223, 235, 250);
+                        }
+                    .QPushButton {
+                        background-color: rgb(171, 204, 249); 
+                        border: 1px solid black; 
+                        border-radius: 10px;
+                        }
+                    .QPushButton:hover {
+                        background-color: rgb(207, 203, 249)
+                        }
+                """)
+
     def create_form_buttons(self):
         # кнопка перехода в Сотрудники
         self.button = QPushButton("Сотрудники", self)
         self.button.resize(150, 40)
-        self.button.move(50, 50)
+        self.button.move(130, 150)
         self.button.clicked.connect(self.employees_clicked)
 
+        # кнопка перехода в Должности
         self.button = QPushButton("Должности", self)
         self.button.resize(150, 40)
-        self.button.move(50, 120)
+        self.button.move(130, 220)
         self.button.clicked.connect(self.post_clicked)
 
         # кнопка перехода в График доступа
         self.button = QPushButton("График доступа", self)
         self.button.resize(150, 40)
-        self.button.move(50, 190)
+        self.button.move(130, 290)
         self.button.clicked.connect(self.access_schedule_clicked)
 
         # кнопка перехода в Учет доступа
         self.button = QPushButton("Учет доступа", self)
         self.button.resize(150, 40)
-        self.button.move(50, 260)
+        self.button.move(430, 150)
         self.button.clicked.connect(self.access_ac_clicked)
 
         # кнопка перехода в Точка доступа
         self.button = QPushButton("Точки доступа", self)
         self.button.resize(150, 40)
-        self.button.move(50, 330)
+        self.button.move(430, 220)
         self.button.clicked.connect(self.access_point_clicked)
 
         # кнопка перехода в События
         self.button = QPushButton("События", self)
         self.button.resize(150, 40)
-        self.button.move(50, 400)
+        self.button.move(430, 290)
         self.button.clicked.connect(self.event_clicked)
 
         # кнопка выход
         self.btn = QPushButton("Выход", self)
         self.btn.resize(150, 40)
-        self.btn.move(500, 400)
+        self.btn.move(280, 400)
         self.btn.clicked.connect(self.close_main_window_clicked)
 
     # Закрыть окно
