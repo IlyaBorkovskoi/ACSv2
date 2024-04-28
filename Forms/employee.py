@@ -37,9 +37,7 @@ class Employees(QWidget):
                                 background-color: rgb(223, 235, 250);
                                 }
                             .QPushButton {
-                                background-color: rgb(171, 204, 249); 
-                                border: 1px solid black; 
-                                border-radius: 10px;
+                                background-color: rgb(171, 204, 249);
                                 }
                             .QPushButton:hover {
                                 background-color: rgb(207, 203, 249)

@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import QTableWidgetItem, QWidget, QPushButton, QLineEdit
 from db_connection import DBConnection
 
 
+
 # Класс Должности
 class Post(QWidget):
     def __init__(self, menu_window: QWidget):
@@ -38,8 +39,6 @@ class Post(QWidget):
                                 }
                             .QPushButton {
                                 background-color: rgb(171, 204, 249); 
-                                border: 1px solid black; 
-                                border-radius: 10px;
                                 }
                             .QPushButton:hover {
                                 background-color: rgb(207, 203, 249)
@@ -150,6 +149,9 @@ class Post(QWidget):
         self.close()
 
 
+
+
+
 # Класс таблица Должностей
 class Post_tb(QTableWidget):
     def __init__(self, wg):
@@ -187,3 +189,6 @@ class Post_tb(QTableWidget):
     def cellClick(self, row, col):  # row - номер строки, col - номер столбца
         self.wg.idp.setText(self.item(row, 0).text())
         self.wg.pn.setText(self.item(row, 1).text().strip())
+
+
+
