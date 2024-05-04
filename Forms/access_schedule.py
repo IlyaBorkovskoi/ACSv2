@@ -208,7 +208,7 @@ class Access_schedule_tb(QTableWidget):
         self.db = wg.db
 
         super().__init__(wg)
-        self.setGeometry(10, 10, 481, 500)
+        self.setGeometry(10, 10, 495, 500)
         self.setColumnCount(5)
         self.verticalHeader().hide()
         self.updt()  # обновить таблицу
