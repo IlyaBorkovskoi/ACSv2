@@ -23,7 +23,7 @@ class AccessSchedule(QWidget):
 
         # параметры окна
         self.setGeometry(100, 100, 1000, 520)
-        self.setFixedSize(1000, 520)
+        self.setFixedSize(1100, 520)
         self.setWindowTitle("График доступа")
         self.tb = Access_schedule_tb(self)
 
@@ -57,67 +57,67 @@ class AccessSchedule(QWidget):
 
         # поле идентификатор
         self.lbl = QLabel("Номер:", self)
-        self.lbl.move(520, 70)
+        self.lbl.move(620, 70)
         self.idas = QLineEdit(self)
         self.idas.resize(150, 40)
-        self.idas.move(610, 60)
+        self.idas.move(710, 60)
 
         # поле сотрудник
         self.lbl = QLabel("Сотрудник", self)
-        self.lbl.move(520, 120)
+        self.lbl.move(620, 120)
         self.ei = QLineEdit(self)
         self.ei.resize(150, 40)
-        self.ei.move(610, 110)
+        self.ei.move(710, 110)
 
         # поле дни недели
         self.lbl = QLabel("Дни недели", self)
-        self.lbl.move(520, 170)
+        self.lbl.move(620, 170)
         self.wd = QLineEdit(self)
         self.wd.resize(150, 40)
-        self.wd.move(610, 160)
+        self.wd.move(710, 160)
 
         # поле время входа
         self.lbl = QLabel("Время входа", self)
-        self.lbl.move(520, 220)
+        self.lbl.move(620, 220)
         self.et = QLineEdit(self)
         self.et.resize(150, 40)
-        self.et.move(610, 210)
+        self.et.move(710, 210)
 
         # поле время выхода
         self.lbl = QLabel("Время выхода", self)
-        self.lbl.move(520, 270)
+        self.lbl.move(620, 270)
         self.ext = QLineEdit(self)
         self.ext.resize(150, 40)
-        self.ext.move(610, 260)
+        self.ext.move(710, 260)
 
         # кнопка добавить запись
         self.btn = QPushButton("Добавить", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 60)
+        self.btn.move(900, 60)
         self.btn.clicked.connect(self.ins)
 
         # кнопка редактировать
         self.btn = QPushButton("Редактировать", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 125)
+        self.btn.move(900, 125)
         self.btn.clicked.connect(self.upentry)
 
         # кнопка удалить запись
         self.btn = QPushButton("Удалить", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 190)
+        self.btn.move(900, 190)
         self.btn.clicked.connect(self.dels)
 
         # кнопка Главное меню
         self.btn = QPushButton("Главное меню", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 260)
+        self.btn.move(900, 260)
         self.btn.clicked.connect(self.go_back_to_menu)
 
         # кнопка выход
         self.btn = QPushButton("Выход", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 450)
+        self.btn.move(900, 450)
         self.btn.clicked.connect(self.close_clicked)
 
     def go_back_to_menu(self):
@@ -208,7 +208,7 @@ class Access_schedule_tb(QTableWidget):
         self.db = wg.db
 
         super().__init__(wg)
-        self.setGeometry(10, 10, 495, 500)
+        self.setGeometry(10, 10, 550, 500)
         self.setColumnCount(5)
         self.verticalHeader().hide()
         self.updt()  # обновить таблицу
@@ -224,7 +224,17 @@ class Access_schedule_tb(QTableWidget):
         self.setHorizontalHeaderLabels(
             ["Номер", "Сотрудник", "День недели", "Время входа", "Время выхода"]
         )
-        self.db.cur.execute("select * from ACCESSSCHEDULE")
+        self.db.cur.execute("""
+                                select
+	                                a.SCHEDULEID id,
+	                                e.EMPLASTNAME lastname,
+	                                a.ACWEEKDAY weekday,
+	                                a.ENTRYTIME entrytime,
+	                                a.EXITTIME exittime
+                                from ACCESSSCHEDULE a
+                                LEFT JOIN EMPLOYEES e ON a.EMPLOYEEID=e.EMPLOYEEID
+                                ORDER BY e.EMPLASTNAME;
+                            """)
         rows = self.db.cur.fetchall()
         i = 0
         for elem in rows:

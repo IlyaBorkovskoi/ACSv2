@@ -201,7 +201,7 @@ class Employees_tb(QTableWidget):
         self.db = wg.db
 
         super().__init__(wg)
-        self.setGeometry(10, 10, 660, 500)
+        self.setGeometry(10, 10, 680, 580)
         self.setColumnCount(6)
         self.verticalHeader().hide()
         self.updt()  # обновить таблицу
@@ -217,7 +217,17 @@ class Employees_tb(QTableWidget):
         self.setHorizontalHeaderLabels(
             ["Номер", "Должность", "Фамилия", "Имя", "Отчество", "Ключ"]
         )
-        self.db.cur.execute("select * from EMPLOYEES order by EMPLASTNAME")
+        self.db.cur.execute("""select
+	                            e.EMPLOYEEID id,
+	                            p.POSTNAME post,
+	                            e.EMPLASTNAME lastname,
+	                            e.EMPFIRSTNAME firstname,
+	                            e.MIDLNAME midname,
+	                            e.EMPKEY key
+                                from EMPLOYEES e
+                                LEFT JOIN POST p ON e.POSTID=p.POSTID
+                                ORDER BY e.EMPLASTNAME
+                                """)
         rows = self.db.cur.fetchall()
         i = 0
         for elem in rows:

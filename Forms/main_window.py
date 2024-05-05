@@ -29,7 +29,7 @@ class MainWindow(QWidget):
 
 
     def create_main_window(self):
-        # Создаём окошко
+        # Создаём окно
         self.setGeometry(100, 100, 700, 500)
         self.setFixedSize(700,500)
         self.setWindowTitle("Система контроля и управления доступом")

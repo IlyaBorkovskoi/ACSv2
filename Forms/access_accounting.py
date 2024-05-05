@@ -22,8 +22,8 @@ class AccessAccounting(QWidget):
         self.db = DBConnection()
 
         # параметры окна
-        self.setGeometry(100, 100, 1000, 520)
-        self.setFixedSize(1000, 520)
+        self.setGeometry(100, 100, 1000, 800)
+        self.setFixedSize(1130, 720)
         self.setWindowTitle("Учет доступа")
         self.tb = AccessAccountingTb(self)
 
@@ -57,73 +57,73 @@ class AccessAccounting(QWidget):
 
         # поле идентификатор
         self.lbl = QLabel("Номер:", self)
-        self.lbl.move(520, 70)
+        self.lbl.move(670, 70)
         self.idaa = QLineEdit(self)
         self.idaa.resize(150, 40)
-        self.idaa.move(610, 60)
+        self.idaa.move(760, 60)
 
         # поле сотрудник
         self.lbl = QLabel("Сотрудник:", self)
-        self.lbl.move(520, 120)
+        self.lbl.move(670, 120)
         self.ei = QLineEdit(self)
         self.ei.resize(150, 40)
-        self.ei.move(610, 110)
+        self.ei.move(760, 110)
 
         # поле дни недели
         self.lbl = QLabel("Точка доступа:", self)
-        self.lbl.move(520, 170)
+        self.lbl.move(670, 170)
         self.pi = QLineEdit(self)
         self.pi.resize(150, 40)
-        self.pi.move(610, 160)
+        self.pi.move(760, 160)
 
         # поле время входа
         self.lbl = QLabel("Событие:", self)
-        self.lbl.move(520, 220)
+        self.lbl.move(670, 220)
         self.evi = QLineEdit(self)
         self.evi.resize(150, 40)
-        self.evi.move(610, 210)
+        self.evi.move(760, 210)
 
         # поле время выхода
         self.lbl = QLabel("Дата:", self)
-        self.lbl.move(520, 270)
+        self.lbl.move(670, 270)
         self.dt = QLineEdit(self)
         self.dt.resize(150, 40)
-        self.dt.move(610, 260)
+        self.dt.move(760, 260)
         # поле время выхода
         self.lbl = QLabel("Время:", self)
-        self.lbl.move(520, 320)
+        self.lbl.move(670, 320)
         self.t = QLineEdit(self)
         self.t.resize(150, 40)
-        self.t.move(610, 310)
+        self.t.move(760, 310)
 
         # кнопка добавить запись
         self.btn = QPushButton("Добавить", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 60)
+        self.btn.move(950, 60)
         self.btn.clicked.connect(self.ins)
 
         # кнопка редактировать
         self.btn = QPushButton("Редактировать", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 120)
+        self.btn.move(950, 120)
         self.btn.clicked.connect(self.upentry)
 
         # кнопка удалить запись
         self.btn = QPushButton("Удалить", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 180)
+        self.btn.move(950, 180)
         self.btn.clicked.connect(self.dels)
 
         # кнопка Главное меню
         self.btn = QPushButton("Главное меню", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 240)
+        self.btn.move(950, 240)
         self.btn.clicked.connect(self.go_back_to_menu)
 
         # кнопка выход
         self.btn = QPushButton("Выход", self)
         self.btn.resize(150, 40)
-        self.btn.move(800, 470)
+        self.btn.move(950, 650)
         self.btn.clicked.connect(self.close_clicked)
 
     #Вернуться на главное меню
@@ -221,7 +221,7 @@ class AccessAccountingTb(QTableWidget):
         self.db = wg.db
 
         super().__init__(wg)
-        self.setGeometry(10, 10, 481, 500)
+        self.setGeometry(10, 10, 610, 700)
         self.setColumnCount(6)
         self.verticalHeader().hide()
         self.updt()  # обновить таблицу
@@ -237,7 +237,21 @@ class AccessAccountingTb(QTableWidget):
         self.setHorizontalHeaderLabels(
             ["Номер", "Сотрудник", "Точка доступа", "Событие", "Дата", "Время"]
         )
-        self.db.cur.execute("select * from ACCESSACCOUNTING")
+        self.db.cur.execute("""
+                                select
+	                                ac.ACCOUNTINGID  id,
+	                                e.EMPLASTNAME emloyees,
+	                                p.POINTNAME point,
+	                                ev.EVENTNAME event,
+	                                ac.ACDATE d,
+	                                ac.ACTIME t
+                                FROM
+                                    ACCESSACCOUNTING ac
+                                    LEFT JOIN EMPLOYEES e ON ac.EMPLOYEEID = e.EMPLOYEEID
+                                    LEFT JOIN ACCESSPOINTS p ON ac.POINTID = p.POINTID
+                                    LEFT JOIN EVENT ev ON ac.EVENTID = ev.EVENTID
+                                    ORDER BY ac.ACDATE DESC;
+                            """)
         rows = self.db.cur.fetchall()
         i = 0
         for elem in rows:
