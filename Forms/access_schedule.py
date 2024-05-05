@@ -137,16 +137,16 @@ class AccessSchedule(QWidget):
     # добавить таблицу новую строку
     def ins(self):
         try:
-            idas, ei, wd, et, ext = (
+            idas, wd, et, ext, ei = (
                 self.idas.text(),
-                self.ei.text(),
                 self.wd.text(),
                 self.et.text(),
                 self.ext.text(),
+                self.ei.text(),
             )
             self.db.cur.execute(
-                "insert into ACCESSSCHEDULE (SCHEDULEID,EMPLOYEEID,ACWEEKDAY,ENTRYTIME,EXITTIME) values (?,?,?,?,?)",
-                (idas, ei, wd, et, ext),
+                "insert into ACCESSSCHEDULE (SCHEDULEID,EMPLOYEEID,ACWEEKDAY,ENTRYTIME,EXITTIME) SELECT ?,e.EMPLOYEEID, ?, ?, ? FROM EMPLOYEES e WHERE e.EMPLASTNAME = ?;",
+                (idas, wd, et, ext, ei),
             )
             QMessageBox.about(self, " ", "Данные добавлены!")
         except:

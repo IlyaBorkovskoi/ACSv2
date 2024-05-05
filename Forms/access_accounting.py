@@ -146,18 +146,18 @@ class AccessAccounting(QWidget):
     def ins(self):
 
         try:
-            idaa, ei, pi, evi, dt, t = (
+            idaa, dt, t, ei, pi, evi = (
                 self.idaa.text(),
+                self.dt.text(),
+                self.t.text(),
                 self.ei.text(),
                 self.pi.text(),
                 self.evi.text(),
-                self.dt.text(),
-                self.t.text()
             )
             self.db.cur.execute(
-                "insert into ACCESSACCOUNTING (ACCOUNTINGID,EMPLOYEEID,POINTID,EVENTID,ACDATE,ACTIME) values (?,?,?,?,?,?)",
-                (idaa, ei, pi, evi, dt, t)
-            )
+                "INSERT INTO ACCESSACCOUNTING (ACCOUNTINGID, EMPLOYEEID, POINTID, EVENTID, ACDATE, ACTIME) SELECT ?, e.EMPLOYEEID, p.POINTID, ev.EVENTID, ?, ? FROM EMPLOYEES e, ACCESSPOINTS p, EVENT ev WHERE e.EMPLASTNAME = ? AND p.POINTNAME = ? AND ev.EVENTNAME = ?;",
+                (idaa, dt, t, ei, pi, evi)
+                                )
             QMessageBox.about(self, " ", "Данные добавлены!")
         except:
             QMessageBox.about(self, "Ошибка!", "Данные не добавлены, повторите попытку")

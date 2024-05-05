@@ -126,18 +126,18 @@ class Employees(QWidget):
     # добавить таблицу новую строку
     def ins(self):
         try:
-            idem, pi, ln, fn, mn, k = (
+            idem, ln, fn, mn, k, pi = (
                 self.idem.text(),
-                self.pi.text(),
                 self.ln.text(),
                 self.fn.text(),
                 self.mn.text(),
                 self.k.text(),
+                self.pi.text(),
             )
             self.db.cur.execute(
-                "insert into EMPLOYEES (EMPLOYEEID,POSTID,EMPLASTNAME,EMPFIRSTNAME,MIDLNAME,EMPKEY) values (?,?,?,?,?,?)",
-                (idem, pi, ln, fn, mn, k),
-            )
+                                "INSERT INTO EMPLOYEES (EMPLOYEEID,POSTID, EMPLASTNAME, EMPFIRSTNAME, MIDLNAME, EMPKEY) SELECT ?,p.POSTID, ?, ?, ?, ? FROM POST p WHERE p.POSTNAME = ?;",
+                                (idem, ln, fn, mn, k, pi,),
+                                )
             QMessageBox.about(self, " ", "Данные добавлены!")
         except:
             QMessageBox.about(self, "Ошибка!", "Данные не добавлены, повторите попытку")
