@@ -147,17 +147,17 @@ class Employees(QWidget):
     # Редактировать строку
     def upentry(self):
         try:
-            idem, pi, ln, fn, mn, k = (
-                self.idem.text(),
-                self.pi.text(),
+            ln, fn, mn, k, pi, idem = (
                 self.ln.text(),
                 self.fn.text(),
                 self.mn.text(),
                 self.k.text(),
+                self.pi.text(),
+                self.idem.text(),
             )
             self.db.cur.execute(
-                "update EMPLOYEES set POSTID=?,EMPLASTNAME=?,EMPFIRSTNAME=?,MIDLNAME=?,EMPKEY=? where EMPLOYEEID=?",
-                (pi, ln, fn, mn, k, idem),
+                "UPDATE EMPLOYEES SET EMPLASTNAME = ?, EMPFIRSTNAME = ?, MIDLNAME = ?, EMPKEY = ?, POSTID = (SELECT POSTID FROM POST WHERE POSTNAME = ?) WHERE EMPLOYEEID = ?;",
+                (ln, fn, mn, k, pi, idem),
             )
             self.db.conn.commit()
             self.tb.updt()

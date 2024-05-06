@@ -167,17 +167,17 @@ class AccessAccounting(QWidget):
     # Редактировать строку
     def upentry(self):
         try:
-            idaa, ei, pi, evi, dt, t = (
-                self.idaa.text(),
+            dt, t, ei, pi, evi, idaa = (
+                self.dt.text(),
+                self.t.text(),
                 self.ei.text(),
                 self.pi.text(),
                 self.evi.text(),
-                self.dt.text(),
-                self.t.text()
+                self.idaa.text(),
             )
             self.db.cur.execute(
-                "update ACCESSACCOUNTING set EMPLOYEEID=?, POINTID=?,EVENTID=?,ACDATE=?,ACTIME=? where ACCOUNTINGID=?",
-                (ei, pi, evi, dt, t, idaa),
+                "update ACCESSACCOUNTING set ACDATE=?,ACTIME=?, EMPLOYEEID = (SELECT EMPLOYEEID FROM EMPLOYEES WHERE EMPLASTNAME = ?), POINTID = (SELECT POINTID FROM ACCESSPOINTS WHERE POINTNAME =?), EVENTID = (SELECT EVENTID FROM EVENT WHERE EVENTNAME =?) WHERE ACCOUNTINGID =?;",
+                (dt, t, ei, pi, evi, idaa),
             )
             self.db.conn.commit()
             self.tb.updt()

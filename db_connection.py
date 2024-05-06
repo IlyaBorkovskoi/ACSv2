@@ -1,6 +1,6 @@
 import fdb
 
-# Класс для подключения к базе данных и выполнению запросов
+# подключение к БД
 DB_CONNECTION_STRING = r"C:/Users/borck/PycharmProjects/ACSv2/ACS"
 DB_USERNAME = "sysdba"
 DB_PASSWORD = "12345"

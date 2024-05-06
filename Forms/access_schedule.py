@@ -157,16 +157,16 @@ class AccessSchedule(QWidget):
     # Редактировать строку
     def upentry(self):
         try:
-            idas, ei, wd, et, ext = (
-                self.idas.text(),
-                self.ei.text(),
+            wd, et, ext, ei, idas  = (
                 self.wd.text(),
                 self.et.text(),
                 self.ext.text(),
+                self.ei.text(),
+                self.idas.text(),
             )
             self.db.cur.execute(
-                "update ACCESSSCHEDULE set EMPLOYEEID=?, ACWEEKDAY=?,ENTRYTIME=?,EXITTIME=? where SCHEDULEID=?",
-                (ei, wd, et, ext, idas),
+                "update ACCESSSCHEDULE set ACWEEKDAY=?,ENTRYTIME=?,EXITTIME=?, EMPLOYEEID = (SELECT EMPLOYEEID FROM EMPLOYEES WHERE EMPLASTNAME = ?) WHERE SCHEDULEID =?;",
+                (wd, et, ext, ei, idas),
             )
             self.db.conn.commit()
             self.tb.updt()

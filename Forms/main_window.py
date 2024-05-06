@@ -17,22 +17,18 @@ from Forms.post import Post
 from Forms.access_accounting import AccessAccounting
 
 
-# Главное окно, содержит навигационную панель
-# для перехода по формам
+# Главное окно
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        # Тут вся инициализация главного окна
-        # вызываем функции помощники
         self.create_main_window()
         self.create_form_buttons()
-
 
     def create_main_window(self):
         # Создаём окно
         self.setGeometry(100, 100, 700, 500)
         self.setFixedSize(700,500)
-        self.setWindowTitle("Система контроля и управления доступом")
+        self.setWindowTitle("Главное меню")
         self.lbl = QLabel("    Система контроля \nи управления доступом", self)
         self.lbl.setFont(QFont("Times", 19, QFont.Bold))
         self.lbl.move(170, 40)
